@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p><%= link_to 'New Task', new_task_path %></p>
+
+<% @tasks.each do |task| %>
+  <p class = "post">
+    <%= task.name %><br>
+    <%= task.description %><br>
+    <%= task.created_at %><br>
+    <%= link_to 'Show', task %><br>
+    <%= link_to 'Edit', edit_task_path(task) %><br>
+    <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %><br>
+  </p>
+<% end %>
