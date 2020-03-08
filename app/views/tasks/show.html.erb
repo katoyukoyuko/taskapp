@@ -1,14 +1,16 @@
+<h1><%= t('view.task.show') %></h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('view.task.name') %>:</strong>
   <%= @task.name %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><%= t('view.task.description') %>:</strong>
   <%= @task.description %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('view.task.edit_button'), edit_task_path(@task) %> |
+<%= link_to t('view.task.back'), tasks_path %>

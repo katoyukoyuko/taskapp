@@ -12,18 +12,17 @@
     <% end %>
   
     <div class="field">
-      <%= form.label :name %>
+      <%= form.label t('view.task.name') %>
       <%= form.text_area :name %>
-      
     </div>
   
     <div class="field">
-      <%= form.label :description %>
+      <%= form.label t('view.task.description') %>
       <%= form.text_area :description %>
     </div>
   
     <div class="actions">
-      <%= form.submit %>
+      <%= form.submit t('view.task.create_task') %>
     </div>
   <% end %>
   

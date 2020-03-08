@@ -1,18 +1,33 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  background do
+    # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+  end
 
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
-        # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, name: 'タスク1', description: 'タスク1の説明')
+        # テストで使用するためのタスクを作成 上に書いたので不要になった
+        # task = FactoryBot.create(:task, name: 'タスク1', description: 'タスク1の説明')
         # タスク一覧ページに遷移
         visit root_path
         # visitした（遷移した）page（タスク一覧ページ）に「タスク1」と「タスク1の説明」という文字列が
         # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-        expect(page).to have_content 'タスク1'
-        expect(page).to have_content 'タスク1の説明'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        # expect(page).to have_content 'タスク1の説明'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+      end
+    end
+    # ここにstep2のテスト内容を追加で記載
+    context '複数のタスクを作成した場合' do
+      it 'タスクが作成日時の降順に並んでいること' do
+        # テストで2件以上の使用するためのもう一つタスクを作成
+        visit tasks_path
+        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
+        expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタイトル１'
       end
     end
   end
@@ -21,12 +36,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'データが保存されること' do
         # new_task_pathにvisitする（タスク登録ページに遷移する）
         visit new_task_path
-        # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
+        # 「名前」というラベル名の入力欄と、「詳細」というラベル名の入力欄に
         # タスクのタイトルと内容をそれぞれfill_in（入力）する
-        fill_in 'Name', with: 'タスク1'
-        fill_in 'Description', with: 'タスク1の説明'
-        # 「Create Task」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
-        click_button 'Create Task'
+        fill_in '名前', with: 'タスク1'
+        fill_in '詳細', with: 'タスク1の説明'
+        # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
+        click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
         # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
         expect(page).to have_content 'タスク1'
