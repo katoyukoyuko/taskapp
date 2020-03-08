@@ -1,0 +1,15 @@
+current directory: /Users/katoyuko/workspace/taskapp/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.6/ext/bootsnap
+/Users/katoyuko/.rvm/rubies/ruby-2.6.5/bin/ruby -I /Users/katoyuko/.rvm/rubies/ruby-2.6.5/lib/ruby/site_ruby/2.6.0 -r ./siteconf20200307-29017-63jwwg.rb extconf.rb
+creating Makefile
+
+current directory: /Users/katoyuko/workspace/taskapp/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/katoyuko/workspace/taskapp/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/katoyuko/workspace/taskapp/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 bootsnap.bundle ./.gem.20200307-29017-1nv3ohj/bootsnap
