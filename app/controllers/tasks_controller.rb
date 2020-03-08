@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order('created_at DESC')
   end
 
   def new
@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     @task = Task.new(tasks_params)
 
     if @task.save
-      redirect_to @task, notice: 'task was successfully created.'
+      redirect_to @task, notice: t('view.task.new_task_complete')
     else
       render :new
     end
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   def update
 
     if @task.update(tasks_params)
-      redirect_to @task, notice: 'task was successfully updated.'
+      redirect_to @task, notice: t('view.task.edit_task_complete')
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'task was successfully destroyed.'
+    redirect_to tasks_url, notice: t('view.task.destroy_task_complete')
   end
 
 

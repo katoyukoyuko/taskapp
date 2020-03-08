@@ -1,0 +1,20 @@
+ja:
+  view:
+    task:
+      name: 名前
+      description: 詳細
+      create_at: 作成日時
+      task_lists: タスク一覧
+      new_task: タスク新規作成
+      new_task_complete: タスク新規作成が完了しました。
+      new_button: 新規作成
+      show: タスク詳細確認
+      show_button: 確認
+      edit: タスク編集
+      edit_button: 編集
+      edit_task_complete: タスク更新が完了しました。
+      destroy: 削除
+      destroy_confirm: タスクを削除しますか？
+      destroy_task_complete: タスク削除が完了しました。
+      back: 戻る
+      create_task: 登録
