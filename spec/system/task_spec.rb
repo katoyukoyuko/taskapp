@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  background do
+  before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
@@ -25,9 +25,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'タスクが作成日時の降順に並んでいること' do
         # テストで2件以上の使用するためのもう一つタスクを作成
         visit tasks_path
-        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
-        expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        task = FactoryBot.create(:task)
+        second_task = FactoryBot.create(:second_task)
+        # task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        # byebug
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
       end
     end
   end
@@ -38,8 +41,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         # 「名前」というラベル名の入力欄と、「詳細」というラベル名の入力欄に
         # タスクのタイトルと内容をそれぞれfill_in（入力）する
-        fill_in '名前', with: 'タスク1'
-        fill_in '詳細', with: 'タスク1の説明'
+        fill_in "name", with: 'タスク1'
+        fill_in "description", with: 'タスク1の説明'
         # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
