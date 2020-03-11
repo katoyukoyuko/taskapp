@@ -1,7 +1,8 @@
 <%= form_with(model: @task, local: true) do |form| %>
     <% if task.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+        <h2><%= pluralize(task.errors.count, "error") %> 
+        <%= t('view.task.not_save') %></h2>
   
         <ul>
         <% task.errors.full_messages.each do |message| %>
@@ -12,12 +13,12 @@
     <% end %>
   
     <div class="field">
-      <%= form.label t('view.task.name')%>
+      <%= form.label t('view.task.name') %>
       <%= form.text_area :name ,id: :name %>
     </div>
   
     <div class="field">
-      <%= form.label t('view.task.description')%>
+      <%= form.label t('view.task.description') %>
       <%= form.text_area :description ,id: :description %>
     </div>
   

@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: t('view.task.new_task_complete')
     else
-      render :new
+      render :new, notice: t('view.task.new_task_complete')
     end
 
   end
