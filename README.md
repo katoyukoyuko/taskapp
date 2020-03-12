@@ -1,5 +1,7 @@
 # README
 
+## DBテーブル情報
+
 ### tasks
 
  - id : integer
@@ -30,4 +32,21 @@
  - id : integer
  - name : string
 
+
+## アプリ情報
+- Ruby 2.6.5
+- Rails 5.2.3
+- psql 12.1
+
+
+## デプロイ方法
+
+### 初回
+1. heroku create で新規appを作成する
+2. git add -A
+3. git commit -m "init"
+4. git push heroku master
+
+### 2回目以降
+1. github に push すると heroku にもデプロイされる
 
