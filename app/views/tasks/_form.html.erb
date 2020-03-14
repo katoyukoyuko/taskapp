@@ -21,6 +21,12 @@
       <%= form.label t('view.task.description') %>
       <%= form.text_area :description ,id: :description %>
     </div>
+
+    <div class="field">
+      <%= form.label t('view.task.end_at') %>
+      <%= form.date_field :end_at %>
+      <%= form.time_select :end_at %>
+    </div>
   
     <div class="actions">
       <%= form.submit t('view.task.create_task') %>
