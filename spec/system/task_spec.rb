@@ -33,6 +33,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
       end
     end
+    # ここにstep3のテスト内容を追加で記載
+    context '終了期日でソートした場合' do
+      it 'タスクが終了期日の降順に並んでいること' do
+        # テストで2件以上の使用するためのもう一つタスクを作成
+        visit root_path
+        visit root_path(sort_expired: "true")
+        # task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        # byebug
+        expect(page).to have_content '2020/03/21'
+        expect(page).to have_content '2020/03/20'
+      end
+    end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
@@ -41,14 +53,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         # 「名前」というラベル名の入力欄と、「詳細」というラベル名の入力欄に
         # タスクのタイトルと内容をそれぞれfill_in（入力）する
+        time = DateTime.new(2020, 3, 20, 15, 0, 30)
+
         fill_in "name", with: 'タスク1'
         fill_in "description", with: 'タスク1の説明'
+        fill_in "end_at", with: time
         # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
         # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
         expect(page).to have_content 'タスク1'
-        expect(page).to have_content 'タスク1の説明'   
+        expect(page).to have_content 'タスク1の説明'
+        expect(page).to have_content '2020/03/20'
       end
     end
   end

@@ -6,7 +6,7 @@
 
 <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
 
-<p><%= link_to "ソートリセット", tasks_path(sort_expired: "false") %></p>
+<p><%= link_to "ソートリセット", root_path %></p>
 
 <table>
   <thead>
@@ -25,7 +25,7 @@
       <td><%= task.name %></td>
       <td><%= task.description %></td>
       <td><%= task.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-      <td><%= task.end_at.strftime('%Y/%m/%d %H:%M:%S') if task.end_at.present? %></td>
+      <td><%= task.end_at.strftime('%Y/%m/%d') if task.end_at.present? %></td>
       <td><%= link_to t('view.task.show_button'), task %></td>
       <td><%= link_to t('view.task.edit_button'), edit_task_path(task) %></td>
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>
