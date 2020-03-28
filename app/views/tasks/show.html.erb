@@ -17,5 +17,10 @@
   <%= @task.end_at.strftime('%Y/%m/%d') if @task.end_at.present? %>
 </p>
 
+<p>
+  <strong><%= t('view.task.status') %>:</strong>
+  <%= @task.completed%>
+</p>
+
 <%= link_to t('view.task.edit_button'), edit_task_path(@task) %> |
 <%= link_to t('view.task.back'), tasks_path %>
