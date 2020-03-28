@@ -12,13 +12,15 @@
   <%= form.text_field :name ,id: :name %>
 
   <%= form.label t('view.task.status') %>
-  <%= form.select :completed ,[[],['未着手',0],['着手中',1],['完了',2]], id: :completed %>
+  <%= form.select :completed , Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed %>
 
   <%= form.submit t('view.task.search') %>
 
 <% end %>
 
 <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
+
+<p><%= link_to "優先度が高い順でソートする", tasks_path(sort_priority: "true") %></p>
 
 <p><%= link_to "検索 / ソート リセット", root_path %></p>
 
@@ -31,6 +33,7 @@
       <th><%= t('view.task.create_at') %></th>
       <th><%= t('view.task.end_at') %></th>
       <th><%= t('view.task.status') %></th>
+      <th><%= t('view.task.priority') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -42,7 +45,8 @@
       <td><%= task.description %></td>
       <td><%= task.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
       <td><%= task.end_at.strftime('%Y/%m/%d') if task.end_at.present? %></td>
-      <td><%= task.completed %></td>
+      <td><%= task.completed_i18n%></td>
+      <td><%= task.priority_i18n %></td>
       <td><%= link_to t('view.task.show_button'), task %></td>
       <td><%= link_to t('view.task.edit_button'), edit_task_path(task) %></td>
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>

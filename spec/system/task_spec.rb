@@ -45,6 +45,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '2020/03/20'
       end
     end
+    # ここにstep3_3のテスト内容を追加で記載
+    context '優先度でソートした場合' do
+      it '優先度が高い順に並んでいること' do
+        visit root_path
+        visit root_path(sort_priority: "true")
+        expect(page).to have_content '0'
+        expect(page).to have_content '1'
+      end
+    end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
