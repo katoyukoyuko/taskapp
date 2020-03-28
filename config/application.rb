@@ -12,6 +12,7 @@ module Taskapp
     config.load_defaults 5.2
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+    config.i18n.default_locale = :ja
 
     config.generators do |g|
       # 不要なcss,helper,js fileを生成しない記述

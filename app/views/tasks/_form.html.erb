@@ -34,10 +34,14 @@
     <% if action = 'edit' %>
       <div class="field">
         <%= form.label t('view.task.status') %>
-        <%= form.select :completed ,[['未着手',0],['着手中',1],['完了',2]], id: :completed %>
+        <%= form.select :completed, Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed %>
       </div>
     <% end %>
-    
+
+    <div class="field">
+      <%= form.label t('view.task.priority') %>
+      <%= form.select :priority , Task.priorities.keys.map {|k| [I18n.t("enums.tasks.priority.#{k}"), k]}, include_blank: true, id: :priority %>
+    </div>
   
     <div class="actions">
       <%= form.submit t('view.task.create_task') %>

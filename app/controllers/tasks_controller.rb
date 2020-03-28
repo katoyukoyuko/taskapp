@@ -9,6 +9,12 @@ class TasksController < ApplicationController
       @tasks = Task.all.order(created_at: :desc)
     end
 
+    if params[:sort_priority]
+      @tasks = Task.all.order(priority: :asc)
+    else
+      @tasks = Task.all.order(created_at: :desc)
+    end
+
     unless params[:search].nil?
       if params[:name].present? && params[:completed].present?
         @tasks = Task.name_like(params[:name]).completed_like(params[:completed].to_i)
@@ -62,7 +68,7 @@ class TasksController < ApplicationController
   private
 
   def tasks_params
-    params.require(:task).permit(:name, :description, :end_at, :completed)
+    params.require(:task).permit(:name, :description, :end_at, :completed, :priority)
   end
 
   def set_task
