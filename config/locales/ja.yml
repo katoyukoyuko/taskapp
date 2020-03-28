@@ -5,6 +5,10 @@ ja:
       description: 詳細
       create_at: 作成日時
       end_at: 終了期限
+      status: ステータス
+      status0: 未着手
+      status1: 未着中
+      status2: 完了
       task_lists: タスク一覧
       new_task: タスク新規作成
       new_task_complete: タスク新規作成が完了しました。
@@ -20,6 +24,7 @@ ja:
       back: 戻る
       create_task: 登録
       not_save: このタスクを保存できませんでした
+      search: 検索
   activerecord:
     errors:
       messages:

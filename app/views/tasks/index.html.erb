@@ -2,11 +2,26 @@
 
 <p id="notice"><%= notice %></p>
 
-<p><%= link_to t('view.task.new_button'), new_task_path %></p>
+<h3><%= t('view.task.search') %></h3>
+
+<%= form_with(method: :get, url: tasks_path, local: true) do |form| %>
+
+  <%= form.hidden_field :search, value: 'true' %>
+  
+  <%= form.label t('view.task.name') %>
+  <%= form.text_field :name ,id: :name %>
+
+  <%= form.label t('view.task.status') %>
+  <%= form.select :completed ,[[],['未着手',0],['着手中',1],['完了',2]], id: :completed %>
+
+  <%= form.submit t('view.task.search') %>
+
+<% end %>
 
 <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
 
-<p><%= link_to "ソートリセット", root_path %></p>
+<p><%= link_to "検索 / ソート リセット", root_path %></p>
+
 
 <table>
   <thead>
@@ -15,6 +30,7 @@
       <th><%= t('view.task.description') %></th>
       <th><%= t('view.task.create_at') %></th>
       <th><%= t('view.task.end_at') %></th>
+      <th><%= t('view.task.status') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,9 +42,13 @@
       <td><%= task.description %></td>
       <td><%= task.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
       <td><%= task.end_at.strftime('%Y/%m/%d') if task.end_at.present? %></td>
+      <td><%= task.completed %></td>
       <td><%= link_to t('view.task.show_button'), task %></td>
       <td><%= link_to t('view.task.edit_button'), edit_task_path(task) %></td>
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>
     </tr>  
     <% end %>
   <tbody>
+</table>
+
+<p><%= link_to t('view.task.new_button'), new_task_path %></p>

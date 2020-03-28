@@ -5,6 +5,7 @@ FactoryBot.define do
     name { 'Factoryで作ったデフォルトのタイトル１' }
     description { 'Factoryで作ったデフォルトのコンテント１' }
     end_at { '2020-03-20 00:00:00' }
+    completed { '1' }
   end
   # 作成するテストデータの名前を「second_task」とします
   # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）

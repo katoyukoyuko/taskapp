@@ -8,6 +8,18 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.order(created_at: :desc)
     end
+
+    unless params[:search].nil?
+      if params[:name].present? && params[:completed].present?
+        @tasks = Task.name_like(params[:name]).completed_like(params[:completed].to_i)
+      elsif params[:name].present?
+        @tasks = Task.name_like(params[:name])
+      elsif params[:completed].present?
+        @tasks = Task.completed_like(params[:completed].to_i)
+      else
+      end
+    end
+
   end
 
   def new
@@ -50,7 +62,7 @@ class TasksController < ApplicationController
   private
 
   def tasks_params
-    params.require(:task).permit(:name, :description, :end_at)
+    params.require(:task).permit(:name, :description, :end_at, :completed)
   end
 
   def set_task

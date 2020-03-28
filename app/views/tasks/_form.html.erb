@@ -26,9 +26,22 @@
       <%= form.label t('view.task.end_at') %>
       <%= form.date_field :end_at ,id: :end_at %>
     </div>
+
+    <% if action = 'new' %>
+      <%= form.hidden_field :completed, :value => 0, id: :task_completed %>
+    <% end %>
+
+    <% if action = 'edit' %>
+      <div class="field">
+        <%= form.label t('view.task.status') %>
+        <%= form.select :completed ,[['未着手',0],['着手中',1],['完了',2]], id: :completed %>
+      </div>
+    <% end %>
+    
   
     <div class="actions">
       <%= form.submit t('view.task.create_task') %>
     </div>
-  <% end %>
+    
+<% end %>
   
