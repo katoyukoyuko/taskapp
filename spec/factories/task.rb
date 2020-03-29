@@ -14,6 +14,34 @@ FactoryBot.define do
     name { 'Factoryで作ったデフォルトのタイトル２' }
     description { 'Factoryで作ったデフォルトのコンテント２' }
     end_at { '2020-03-21 00:00:00' }
-    priority { 'middle'}
+    priority { 'middle' }
+  end
+
+  factory :third_task, class: Task do
+    name { 'Factoryで作ったデフォルトのタイトル３' }
+    description { 'Factoryで作ったデフォルトのコンテント３' }
+    end_at { '2020-03-21 00:00:00' }
+    priority { 'middle' }
+  end
+
+  factory :forth_task, class: Task do
+    name { 'Factoryで作ったデフォルトのタイトル４' }
+    description { 'Factoryで作ったデフォルトのコンテント４' }
+    end_at { '2020-03-21 00:00:00' }
+    priority { 'middle' }
+  end
+
+  factory :fifth_task, class: Task do
+    name { 'Factoryで作ったデフォルトのタイトル５' }
+    description { 'Factoryで作ったデフォルトのコンテント５' }
+    end_at { '2020-03-21 00:00:00' }
+    priority { 'middle' }
+  end
+
+  factory :sixth_task, class: Task do
+    name { 'Factoryで作ったデフォルトのタイトル６' }
+    description { 'Factoryで作ったデフォルトのコンテント６' }
+    end_at { '2020-03-21 00:00:00' }
+    priority { 'middle' }
   end
 end
