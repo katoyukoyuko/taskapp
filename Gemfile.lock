@@ -52,6 +52,7 @@ GEM
       msgpack (~> 1.0)
     bootsnap (1.4.6-java)
       msgpack (~> 1.0)
+    brakeman (4.8.0)
     builder (3.2.4)
     byebug (11.1.1)
     capybara (3.31.0)
@@ -98,6 +99,18 @@ GEM
     io-like (0.3.1)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    kaminari (1.2.0)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.0)
+      kaminari-activerecord (= 1.2.0)
+      kaminari-core (= 1.2.0)
+    kaminari-actionview (1.2.0)
+      actionview
+      kaminari-core (= 1.2.0)
+    kaminari-activerecord (1.2.0)
+      activerecord
+      kaminari-core (= 1.2.0)
+    kaminari-core (1.2.0)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.1.5)
@@ -255,6 +268,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
+  brakeman
   byebug
   capybara (>= 2.15)
   chromedriver-helper
@@ -263,6 +277,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jbuilder (~> 2.5)
+  kaminari
   launchy
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)

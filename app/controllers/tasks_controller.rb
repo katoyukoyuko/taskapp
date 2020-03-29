@@ -26,6 +26,8 @@ class TasksController < ApplicationController
       end
     end
 
+    @tasks = Task.all.page(params[:page]).per(5)
+
   end
 
   def new

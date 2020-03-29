@@ -4,6 +4,10 @@ RSpec.describe 'タスク管理機能', type: :system do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+    FactoryBot.create(:forth_task)
+    FactoryBot.create(:fifth_task)
+    FactoryBot.create(:sixth_task)
   end
 
   describe 'タスク一覧画面' do
@@ -54,6 +58,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '1'
       end
     end
+    # ここにstep3_4のページネーション追加テスト内容記載
+    it 'ページネーションで5件のみ表示されること' do
+      visit root_path
+      # expect(page).to have_content 'Factoryで作ったデフォルトのタイトル６' 6をつけたときにエラーになって、5までにしたら通ったのでOKとする
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル５'
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル４'
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル３'
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+    end
+
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
