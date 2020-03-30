@@ -58,6 +58,36 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '1'
       end
     end
+
+    context '名前で検索した場合' do
+      it '検索した名前のタスクが並んでいること' do
+        visit root_path
+        fill_in "name", with: 'Factoryで作ったデフォルトのタイトル１'
+        click_button '検索'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+      end
+    end
+
+    context 'ステータスで検索した場合' do
+      it '検索したステータスのタスクが並んでいること' do
+        visit root_path
+        select "着手中", from: 'completed'
+        click_button '検索'
+        expect(page).to have_content 'In progress'
+      end
+    end
+
+    context '名前で検索した場合' do
+      it '検索した名前のタスクが並んでいること' do
+        visit root_path
+        fill_in "name", with: 'Factoryで作ったデフォルトのタイトル１'
+        select "着手中", from: 'completed'
+        click_button '検索'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        expect(page).to have_content 'In progress'
+      end
+    end
+
     # ここにstep3_4のページネーション追加テスト内容記載
     it 'ページネーションで5件のみ表示されること' do
       visit root_path
@@ -82,6 +112,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in "name", with: 'タスク1'
         fill_in "description", with: 'タスク1の説明'
         fill_in "end_at", with: time
+        select "未着手", from: 'task_completed'
+        select "高", from: 'task_priority'
         # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
@@ -89,6 +121,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'タスク1'
         expect(page).to have_content 'タスク1の説明'
         expect(page).to have_content '2020/03/20'
+        expect(page).to have_content 'No started'
+        expect(page).to have_content 'High'
       end
     end
   end
