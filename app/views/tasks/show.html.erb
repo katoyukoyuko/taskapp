@@ -2,30 +2,33 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong><%= t('view.task.name') %>:</strong>
-  <%= @task.name %>
-</p>
+<table class="table">
+  <tbody>
+    <tr>
+    <th scope="row"><strong><%= t('view.task.name') %></strong></th>
+    <td><%= @task.name %></td>
+    </tr>
+    <tr>
+    <th scope="row"><strong><%= t('view.task.description') %></strong></th>
+    <td><%= @task.description %></td>
+    </tr>
+    <tr>
+    <th scope="row"><strong><%= t('view.task.end_at') %></strong></th>
+    <td><%= @task.end_at.strftime('%Y/%m/%d') if @task.end_at.present? %></td>
+    </tr>
+    <tr>
+    <th scope="row"><strong><%= t('view.task.status') %></strong></th>
+    <td><%= @task.completed_i18n %></td>
+    </tr>
+    <tr>
+    <th scope="row"><strong><%= t('view.task.priority') %></strong></th>
+    <td><%= @task.priority_i18n %></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong><%= t('view.task.description') %>:</strong>
-  <%= @task.description %>
-</p>
+<%= link_to t('view.task.edit_button'), edit_task_path(@task),class: "btn btn-info" %> 
 
-<p>
-  <strong><%= t('view.task.end_at') %>:</strong>
-  <%= @task.end_at.strftime('%Y/%m/%d') if @task.end_at.present? %>
-</p>
+<hr>
 
-<p>
-  <strong><%= t('view.task.status') %>:</strong>
-  <%= @task.completed_i18n %>
-</p>
-
-<p>
-  <strong><%= t('view.task.priority') %>:</strong>
-  <%= @task.priority_i18n %>
-</p>
-
-<%= link_to t('view.task.edit_button'), edit_task_path(@task) %> |
-<%= link_to t('view.task.back'), tasks_path %>
+<%= link_to t('view.task.back'), tasks_path, class: "btn btn-secondary" %>

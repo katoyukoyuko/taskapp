@@ -2,32 +2,38 @@
 
 <p id="notice"><%= notice %></p>
 
-<h3><%= t('view.task.search') %></h3>
+<hr>
+
+<h4><%= t('view.task.search') %></h4>
 
 <%= form_with(method: :get, url: tasks_path, local: true) do |form| %>
 
   <%= form.hidden_field :search, value: 'true' %>
-  
+
   <%= form.label t('view.task.name') %>
-  <%= form.text_field :name ,id: :name %>
+  <%= form.text_field :name ,id: :name%>
 
   <%= form.label t('view.task.status') %>
-  <%= form.select :completed , Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed %>
+  <%= form.select :completed , Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed, class: "form-control" %>
 
-  <%= form.submit t('view.task.search') %>
+  <%= form.submit t('view.task.search') ,class: "btn btn-info" %>
 
 <% end %>
 
-<p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
+<hr>
 
-<p><%= link_to "優先度が高い順でソートする", tasks_path(sort_priority: "true") %></p>
+<h4><%= t('view.task.sort') %></h4>
 
-<p><%= link_to "検索 / ソート リセット", root_path %></p>
+<p>
+  <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") , class: "btn btn-info" %>
+  <%= link_to "優先度が高い順でソートする", tasks_path(sort_priority: "true") , class: "btn btn-info", type: "button" %>
+  <%= link_to "検索 / ソート リセット", root_path , class: "btn btn-info", type: "button" %>
+</p>
 
 
-<table>
+<table class="table">
   <thead>
-    <tr>
+    <tr class="table-info">
       <th><%= t('view.task.name') %></th>
       <th><%= t('view.task.description') %></th>
       <th><%= t('view.task.create_at') %></th>
@@ -52,9 +58,9 @@
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>
     </tr>  
     <% end %>
-  <tbody>
+  </tbody>
 </table>
 
 <%= paginate @tasks %>
 
-<p><%= link_to t('view.task.new_button'), new_task_path %></p>
+<p><%= link_to t('view.task.new_button'), new_task_path , class: "btn btn-info", type: "button" %></p>

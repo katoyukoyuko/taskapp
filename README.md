@@ -49,4 +49,6 @@
 
 ### 2回目以降
 1. github に push すると heroku にもデプロイされる
+2. アセットコンパイルは再度しないといけない
+   rails assets:precompile RAILS_ENV=production
 

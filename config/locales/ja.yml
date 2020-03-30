@@ -25,6 +25,7 @@ ja:
       create_task: 登録
       not_save: このタスクを保存できませんでした
       search: 検索
+      sort: 絞り込み
       priority: 優先度
   activerecord:
     errors:
