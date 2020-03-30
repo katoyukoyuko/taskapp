@@ -7,7 +7,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     FactoryBot.create(:third_task)
     FactoryBot.create(:forth_task)
     FactoryBot.create(:fifth_task)
-    FactoryBot.create(:sixth_task)
+    # FactoryBot.create(:sixth_task)
   end
 
   describe 'タスク一覧画面' do
