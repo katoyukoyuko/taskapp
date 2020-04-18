@@ -127,8 +127,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe 'タスク詳細画面' do
-     context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示されたページに遷移すること' do
+    context '任意のタスク詳細画面に遷移した場合' do
+      it '該当タスクの内容が表示されたページに遷移すること' do
         # テストで使用するためのタスクを作成
         task = FactoryBot.create(:task, name: 'タスク1', description: 'タスク1の説明')
         # タスク詳細ページに遷移
@@ -137,7 +137,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
         expect(page).to have_content 'タスク1'
         expect(page).to have_content 'タスク1の説明'
-       end
-     end
+      end
+    end
   end
 end
