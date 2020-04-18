@@ -3,28 +3,36 @@ class TasksController < ApplicationController
 
 
   def index
-    hash = Task.completeds
+    if logged_in?
+      # @user = current_user
+      # binding.irb
 
-    if params[:sort_expired]
-      @tasks = Task.all.order(end_at: :desc).page(params[:page]).per(5)
-    else
-      @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
-    end
+      hash = Task.completeds
 
-    if params[:sort_priority]
-      @tasks = Task.all.order(priority: :asc).page(params[:page]).per(5)
-    else
-    end
+      if params[:sort_expired]
+        # @tasks = Task.all.order(end_at: :desc).page(params[:page]).per(5)
+        @tasks = current_user.tasks.all.order(end_at: :desc).page(params[:page]).per(5)
+      else
+        @tasks = current_user.tasks.all.order(created_at: :desc).page(params[:page]).per(5)
+      end
 
-    unless params[:search].nil?
-      if params[:name].present? && params[:completed].present?
-        @tasks = Task.name_like(params[:name]).completed_like(hash[params[:completed]].to_i).page(params[:page]).per(5)
-      elsif params[:name].present?
-        @tasks = Task.name_like(params[:name]).page(params[:page]).per(5)
-      elsif params[:completed].present?
-        @tasks = Task.completed_like(hash[params[:completed]].to_i).page(params[:page]).per(5)
+      if params[:sort_priority]
+        @tasks = current_user.tasks.all.order(priority: :asc).page(params[:page]).per(5)
       else
       end
+
+      unless params[:search].nil?
+        if params[:name].present? && params[:completed].present?
+          @tasks = current_user.tasks.name_like(params[:name]).completed_like(hash[params[:completed]].to_i).page(params[:page]).per(5)
+        elsif params[:name].present?
+          @tasks = current_user.tasks.name_like(params[:name]).page(params[:page]).per(5)
+        elsif params[:completed].present?
+          @tasks = current_user.tasks.completed_like(hash[params[:completed]].to_i).page(params[:page]).per(5)
+        else
+        end
+      end
+    else
+    redirect_to new_session_path, notice: t('view.task.login')
     end
 
     # @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
@@ -33,10 +41,11 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @task.user = current_user
   end
 
   def create
-    @task = Task.new(tasks_params)
+    @task = current_user.tasks.build(tasks_params)
 
     if @task.save
       redirect_to @task, notice: t('view.task.new_task_complete')
