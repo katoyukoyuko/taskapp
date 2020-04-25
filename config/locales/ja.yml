@@ -30,6 +30,7 @@ ja:
       login: ログインしてください
     user:
       mypage: マイページ
+      page: のページ
       sign_up: ユーザー登録
       register: 登録
       name: 名前
@@ -37,6 +38,16 @@ ja:
       password: パスワード
       password_confirmation: パスワード(確認用)
       error: 件エラーがあります
+      user_lists: ユーザー一覧
+      edit: ユーザー編集
+      task_count: タスク数
+      id: ユーザーID
+      destroy_message: ユーザーを削除しました
+      edit_message: ユーザーを編集しました
+      admin: 管理人
+      destroy_confirm: ユーザーを削除しますか？
+      user_admin_page: ユーザー管理画面
+      destroy_errer: 削除にエラーがあります。現在あなたのみが管理人のためユーザー削除できません。
     session:
       login: ログイン
   activerecord:

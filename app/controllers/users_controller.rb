@@ -30,6 +30,19 @@ class UsersController < ApplicationController
 
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user.id), notice: t('view.user.edit_message')
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path
+  end
+
   private
   
   def user_params
