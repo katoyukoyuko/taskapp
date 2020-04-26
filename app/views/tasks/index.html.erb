@@ -51,7 +51,7 @@
       <td class="task_row"><%= task.name %></td>
       <td><%= task.description %></td>
       <td><%= task.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-      <td class="task_row_endat"><%= task.end_at.strftime('%Y/%m/%d') if task.end_at.present? %></td>
+      <td class="task_row_endat"><%= task.end_at&.strftime('%Y/%m/%d') %></td>
       <td><%= task.completed_i18n%></td>
       <td class="task_row_priority"><%= task.priority_i18n %></td>
       <td><%= link_to t('view.task.show_button'), task %></td>

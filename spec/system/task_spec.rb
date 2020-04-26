@@ -2,16 +2,16 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのユーザーを二つ作成する
-    @user = FactoryBot.create(:user)
-    @admin_user = FactoryBot.create(:admin_user)
+    @user = create(:user)
+    @admin_user = create(:admin_user)
 
     # あらかじめタスク一覧のテストで使用するためのタスクを作成する
-    @task = FactoryBot.create(:task, user: @user)
-    FactoryBot.create(:second_task, user: @user)
-    FactoryBot.create(:third_task, user: @user)
-    FactoryBot.create(:forth_task, user: @user)
-    FactoryBot.create(:fifth_task, user: @user)
-    FactoryBot.create(:sixth_task, user: @user)
+    @task = create(:task, user: @user)
+    create(:second_task, user: @user)
+    create(:third_task, user: @user)
+    create(:forth_task, user: @user)
+    create(:fifth_task, user: @user)
+    create(:sixth_task, user: @user)
     
     visit new_session_path
     fill_in "session[email]", with: @user.email

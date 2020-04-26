@@ -1,21 +1,16 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :admin_user, only: [:index, :new, :edit]
 
   def index
-    if current_user.admin == true
+    if admin_user == true
       @users = User.all.includes(:tasks)
-    else
-      redirect_to root_path
-      flash[:notice] = 'あなたは管理者ではありません'
     end
   end
 
   def new
-    if current_user.admin == true
+    if admin_user == true
       @user = User.new
-    else
-      redirect_to root_path
-      flash[:notice] = 'あなたは管理者ではありません'
     end
   end
 
@@ -23,7 +18,6 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      # session[:user_id] = @user.id
       flash[:notice] = 'ユーザーを作成しました'
       redirect_to admin_users_path
     else
@@ -32,21 +26,9 @@ class Admin::UsersController < ApplicationController
     
   end
 
-  def show
-    # if current_user != @user
-    #   redirect_to root_path
-    # else
-    # end
+  def show; end
 
-  end
-
-  def edit
-    if current_user.admin == true
-    else
-      redirect_to root_path
-      flash[:notice] = 'あなたは管理者ではありません'
-    end
-  end
+  def edit; end
 
   def update
     if @user.update(user_params)
@@ -76,6 +58,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def admin_user
-    @user.admin = true
+    if current_user.admin?
+      return true
+    else
+      redirect_to root_path
+      flash[:notice] = 'あなたは管理者ではありません'
+    end
   end
 end
