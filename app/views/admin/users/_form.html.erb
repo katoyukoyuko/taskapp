@@ -1,0 +1,18 @@
+<%= form_with(model: [:admin, @user], local: true) do |f| %>  
+    <%= f.label t('view.user.name') %>
+    <%= f.text_field :name %>
+    <br>
+    <%= f.label t('view.user.email') %>
+    <%= f.email_field :email %>
+    <br>
+    <%= f.label t('view.user.admin') %>
+    <%= f.check_box :admin, {}, "true", "false" %>
+    <br>
+    <%= f.label t('view.user.password') %>
+    <%= f.password_field :password %>
+    <br>
+    <%= f.label t('view.user.password_confirmation') %>
+    <%= f.password_field :password_confirmation %>
+    <br>
+    <%= f.submit t('view.user.register') ,class: "btn btn-info" %>
+<% end %>

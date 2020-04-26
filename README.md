@@ -46,6 +46,8 @@
 2. git add -A
 3. git commit -m "init"
 4. git push heroku master
+5. heroku run rails db:create
+6. heroku run rails db:migrate
 
 ### 2回目以降
 1. github に push すると heroku にもデプロイされる

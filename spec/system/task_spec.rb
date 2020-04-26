@@ -1,14 +1,24 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
-    # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
-    FactoryBot.create(:forth_task)
-    FactoryBot.create(:fifth_task)
-    # FactoryBot.create(:sixth_task)
+    # あらかじめタスク一覧のテストで使用するためのユーザーを二つ作成する
+    @user = create(:user)
+    @admin_user = create(:admin_user)
+
+    # あらかじめタスク一覧のテストで使用するためのタスクを作成する
+    @task = create(:task, user: @user)
+    create(:second_task, user: @user)
+    create(:third_task, user: @user)
+    create(:forth_task, user: @user)
+    create(:fifth_task, user: @user)
+    create(:sixth_task, user: @user)
+    
+    visit new_session_path
+    fill_in "session[email]", with: @user.email
+    fill_in "session[password]", with: @user.password
+    click_button 'ログイン'
   end
+
 
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
@@ -19,7 +29,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit root_path
         # visitした（遷移した）page（タスク一覧ページ）に「タスク1」と「タスク1の説明」という文字列が
         # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
         # expect(page).to have_content 'タスク1の説明'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
@@ -29,12 +39,10 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'タスクが作成日時の降順に並んでいること' do
         # テストで2件以上の使用するためのもう一つタスクを作成
         visit tasks_path
-        task = FactoryBot.create(:task)
-        second_task = FactoryBot.create(:second_task)
-        # task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        # byebug
-        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
-        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+
+        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル６'
+        expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタイトル５'
       end
     end
     # ここにstep3のテスト内容を追加で記載
@@ -43,10 +51,13 @@ RSpec.describe 'タスク管理機能', type: :system do
         # テストで2件以上の使用するためのもう一つタスクを作成
         visit root_path
         visit root_path(sort_expired: "true")
-        # task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        task_list = all('.task_row_endat') # タスク一覧を配列として取得するため、View側でidを振っておく
         # byebug
-        expect(page).to have_content '2020/03/21'
-        expect(page).to have_content '2020/03/20'
+        expect(task_list[0]).to have_content '2020/03/19'
+        expect(task_list[1]).to have_content '2020/03/20'
+        expect(task_list[2]).to have_content '2020/03/21'
+        expect(task_list[3]).to have_content '2020/03/21'
+        expect(task_list[4]).to have_content '2020/03/21'
       end
     end
     # ここにstep3_3のテスト内容を追加で記載
@@ -54,8 +65,13 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '優先度が高い順に並んでいること' do
         visit root_path
         visit root_path(sort_priority: "true")
-        expect(page).to have_content '0'
-        expect(page).to have_content '1'
+        task_list = all('.task_row_priority') # タスク一覧を配列として取得するため、View側でidを振っておく
+
+        expect(task_list[0]).to have_content 'High'
+        expect(task_list[1]).to have_content 'Middle'
+        expect(task_list[2]).to have_content 'Middle'
+        expect(task_list[3]).to have_content 'Middle'
+        expect(task_list[4]).to have_content 'Middle'
       end
     end
 
@@ -77,8 +93,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
-    context '名前で検索した場合' do
-      it '検索した名前のタスクが並んでいること' do
+    context '名前とステータスで検索した場合' do
+      it '検索した名前とステータスのタスクが並んでいること' do
         visit root_path
         fill_in "name", with: 'Factoryで作ったデフォルトのタイトル１'
         select "着手中", from: 'completed'
@@ -91,12 +107,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     # ここにstep3_4のページネーション追加テスト内容記載
     it 'ページネーションで5件のみ表示されること' do
       visit root_path
-      # expect(page).to have_content 'Factoryで作ったデフォルトのタイトル６' 6をつけたときにエラーになって、5までにしたら通ったのでOKとする
+      expect(page).not_to have_content 'Factoryで作ったデフォルトのタイトル１'
+      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル６'
       expect(page).to have_content 'Factoryで作ったデフォルトのタイトル５'
       expect(page).to have_content 'Factoryで作ったデフォルトのタイトル４'
       expect(page).to have_content 'Factoryで作ったデフォルトのタイトル３'
       expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
-      expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
     end
 
   end
@@ -129,14 +145,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
-        # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, name: 'タスク1', description: 'タスク1の説明')
         # タスク詳細ページに遷移
-        visit task_path(task.id)
+        visit task_path(@task.id)
         # visitした（遷移した）page（タスク詳細ページ）に「タスク1」と「タスク1の説明」という文字列が
         # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-        expect(page).to have_content 'タスク1'
-        expect(page).to have_content 'タスク1の説明'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        expect(page).to have_content 'Factoryで作ったデフォルトのコンテント１'
       end
     end
   end

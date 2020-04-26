@@ -11,7 +11,7 @@ class TasksController < ApplicationController
 
       if params[:sort_expired]
         # @tasks = Task.all.order(end_at: :desc).page(params[:page]).per(5)
-        @tasks = current_user.tasks.all.order(end_at: :desc).page(params[:page]).per(5)
+        @tasks = current_user.tasks.all.order(end_at: :asc).page(params[:page]).per(5)
       else
         @tasks = current_user.tasks.all.order(created_at: :desc).page(params[:page]).per(5)
       end

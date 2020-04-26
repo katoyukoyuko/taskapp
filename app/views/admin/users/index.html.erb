@@ -1,0 +1,31 @@
+<h1><%= t('view.user.user_lists') %></h1>
+
+<td><%= current_user.id %>:<%= current_user.name %></td>
+
+<table class="table">
+    <thead>
+        <tr class="table-info">
+            <th><%= t('view.user.id') %></th>
+            <th><%= t('view.user.name') %></th>
+            <th><%= t('view.user.admin') %></th>
+            <th><%= t('view.user.task_count') %></th>
+            <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @users.each do |user| %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %></td>
+                <td><%= user.admin %></td>
+                <td><%= user.tasks.count %></td>
+                <td><%= link_to t('view.task.show_button'), admin_user_path(user) %></td>
+                <td><%= link_to t('view.task.edit_button'), edit_admin_user_path(user) %></td>
+                <td><%= link_to t('view.task.destroy'), admin_user_path(user), method: :delete, data: { confirm: t('view.user.destroy_confirm') } %></td>
+            </tr>  
+        <% end %>
+    </tbody>
+</table>
+
+<p><%= link_to t('view.task.new_button'), new_admin_user_path , class: "btn btn-info", type: "button" %></p>

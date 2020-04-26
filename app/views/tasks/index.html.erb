@@ -17,6 +17,7 @@
   <%= form.select :completed , Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed, class: "form-control" %>
 
   <%= form.submit t('view.task.search') ,class: "btn btn-info" %>
+  <%= link_to "検索 リセット", root_path , class: "btn btn-default" %>
 
 <% end %>
 
@@ -25,9 +26,9 @@
 <h4><%= t('view.task.sort') %></h4>
 
 <p>
-  <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") , class: "btn btn-info" %>
-  <%= link_to "優先度が高い順でソートする", tasks_path(sort_priority: "true") , class: "btn btn-info", type: "button" %>
-  <%= link_to "検索 / ソート リセット", root_path , class: "btn btn-info", type: "button" %>
+  <%= link_to "終了期限が近い順でソートする", tasks_path(sort_expired: "true") , class: "btn btn-info" %>
+  <%= link_to "優先度が高い順でソートする", tasks_path(sort_priority: "true") , class: "btn btn-info" %>
+  <%= link_to "ソート リセット", root_path , class: "btn btn-default" %>
 </p>
 
 
@@ -47,12 +48,12 @@
   <tbody>
     <% @tasks.each do |task| %>
     <tr>
-      <td><%= task.name %></td>
+      <td class="task_row"><%= task.name %></td>
       <td><%= task.description %></td>
       <td><%= task.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-      <td><%= task.end_at.strftime('%Y/%m/%d') if task.end_at.present? %></td>
+      <td class="task_row_endat"><%= task.end_at&.strftime('%Y/%m/%d') %></td>
       <td><%= task.completed_i18n%></td>
-      <td><%= task.priority_i18n %></td>
+      <td class="task_row_priority"><%= task.priority_i18n %></td>
       <td><%= link_to t('view.task.show_button'), task %></td>
       <td><%= link_to t('view.task.edit_button'), edit_task_path(task) %></td>
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>

@@ -1,6 +1,9 @@
-<h1><%= t('view.user.mypage') %></h1>
-<p><%= t('view.user.name') %><%= @user.name %></p>
-<p><%= t('view.user.email') %><%= @user.email %></p>
+<td><%= current_user.id %>:<%= current_user.name %></td>
+
+<h1><%= @user.name %><%= t('view.user.page') %></h1>
+<p><%= t('view.user.name') %>:<%= @user.name %></p>
+<p><%= t('view.user.email') %>:<%= @user.email %></p>
+<p><%= t('view.user.admin') %>:<%= @user.admin %></p>
 
 <table class="table">
   <thead>
@@ -31,8 +34,6 @@
     <% end %>
   </tbody>
 </table>
-
-<p><%= link_to t('view.task.task_lists'), root_path , class: "btn btn-info", type: "button" %></p>
 
 <% if current_user.admin == true %>
 <p><%= link_to t('view.user.user_admin_page'), admin_users_path , class: "btn btn-info", type: "button" %></p>
