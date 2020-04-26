@@ -38,10 +38,10 @@ FactoryBot.define do
     priority { 'middle' }
   end
 
-  # factory :sixth_task, class: Task do
-  #   name { 'Factoryで作ったデフォルトのタイトル６' }
-  #   description { 'Factoryで作ったデフォルトのコンテント６' }
-  #   end_at { '2020-03-21 00:00:00' }
-  #   priority { 'middle' }
-  # end
+  factory :sixth_task, class: Task do
+    name { 'Factoryで作ったデフォルトのタイトル６' }
+    description { 'Factoryで作ったデフォルトのコンテント６' }
+    end_at { '2020-03-19 00:00:00' }
+    priority { 'middle' }
+  end
 end
