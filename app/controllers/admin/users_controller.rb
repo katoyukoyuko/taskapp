@@ -1,15 +1,15 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :admin_user, only: [:index, :new, :edit]
+  before_action :require_admin, only: [:index, :new, :edit]
 
   def index
-    if admin_user == true
+    if require_admin == true
       @users = User.all.includes(:tasks)
     end
   end
 
   def new
-    if admin_user == true
+    if require_admin == true
       @user = User.new
     end
   end
@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
 
     if @user.save
       flash[:notice] = 'ユーザーを作成しました'
-      redirect_to admin_users_path
+      redirect_to require_admins_path
     else
       render :new
     end
@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_user_path(@user.id), notice: t('view.user.edit_message')
+      redirect_to require_admin_path(@user.id), notice: t('view.user.edit_message')
     else
       render :edit
     end
@@ -40,9 +40,9 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      redirect_to admin_users_path, notice: t('view.user.destroy_message')
+      redirect_to require_admins_path, notice: t('view.user.destroy_message')
     else
-      redirect_to admin_users_path, notice: t('view.user.destroy_errer')
+      redirect_to require_admins_path, notice: t('view.user.destroy_errer')
     end
   end
 
@@ -57,12 +57,12 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def admin_user
-    if current_user.admin?
-      return true
-    else
-      redirect_to root_path
+  def require_admin
+    unless current_user.admin?
       flash[:notice] = 'あなたは管理者ではありません'
+      redirect_to root_path
+    else
+      return true
     end
   end
 end

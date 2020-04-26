@@ -11,13 +11,11 @@ RSpec.describe 'タスク管理機能', type: :model do
 
   it 'nameが空ならバリデーションが通らない' do
     task = Task.new(name: '', description: '失敗テスト')
-    task.save
     expect(task).not_to be_valid
   end
   it 'nameとdescriptionに内容が記載されていればバリデーションが通る' do
     task = Task.new(name: '失敗', description: '失敗テスト', user: @user)
-    task.save
-    expect(task).to be_valid
+    expect(task).to be_valid # expect(task).to be_invalid も同様の意味でかける
   end
 
   describe 'scope' do
