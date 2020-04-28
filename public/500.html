@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   .rails-default-error-page {
-    background-color: #EFEFEF;
+    background-color: #bee5eb;
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
@@ -23,7 +23,7 @@
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
+    border-top: #BBB solid 2px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
     background-color: white;
@@ -33,7 +33,7 @@
 
   .rails-default-error-page h1 {
     font-size: 100%;
-    color: #730E15;
+    color: rgb(34, 187, 214);
     line-height: 1.5em;
   }
 
@@ -58,9 +58,12 @@
   <!-- This file lives in public/500.html -->
   <div class="dialog">
     <div>
-      <h1>We're sorry, but something went wrong.</h1>
+      <h1>申し訳ありません。システムエラーが発生しました。</h1>
+      <p>もしこのエラーが出ましたら、<br>
+        システムの管理者にお知らせください。</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p><a href="/">トップページ</a></p>
   </div>
 </body>
+
 </html>
