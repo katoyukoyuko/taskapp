@@ -5,13 +5,23 @@ RSpec.describe 'タスク管理機能', type: :system do
     @user = create(:user)
     @admin_user = create(:admin_user)
 
+    # あらかじめラベルを登録しておく
+    @label = create(:label)
+    @label1 = create(:label1)
+    @label2 = create(:label2)
+
     # あらかじめタスク一覧のテストで使用するためのタスクを作成する
     @task = create(:task, user: @user)
-    create(:second_task, user: @user)
+    @task2 = create(:second_task, user: @user)
     create(:third_task, user: @user)
     create(:forth_task, user: @user)
     create(:fifth_task, user: @user)
     create(:sixth_task, user: @user)
+
+    #あらかじめラベルとタスクの紐付けも登録しておく
+    create(:labelling, task: @task, label:@label)
+    create(:labelling1, task: @task, label:@label1)
+    create(:labelling2, task: @task2, label:@label2)
     
     visit new_session_path
     fill_in "session[email]", with: @user.email
@@ -104,6 +114,50 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
+    context 'ラベルで検索した場合' do
+      it '検索したラベルとステータスのタスクが並んでいること' do
+        visit root_path
+        select "Label1", from: 'label_id'
+        click_button '検索'
+        expect(page).to have_content 'Label1'
+      end
+    end
+
+    context 'ラベルと名前で検索した場合' do
+      it '検索した名前とラベルのタスクが並んでいること' do
+        visit root_path
+        fill_in "name", with: 'Factoryで作ったデフォルトのタイトル２'
+        select "Label2", from: 'label_id'
+        click_button '検索'
+        expect(page).to have_content 'Label2'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
+      end
+    end
+
+    context 'ラベルとステータスで検索した場合' do
+      it '検索したラベルとステータスのタスクが並んでいること' do
+        visit root_path
+        select "Label0", from: 'label_id'
+        select "着手中", from: 'completed'
+        click_button '検索'
+        expect(page).to have_content 'Label0'
+        expect(page).to have_content 'In progress'
+      end
+    end
+
+    context '名前とラベルとステータスで検索した場合' do
+      it '検索した名前とラベルとステータスのタスクが並んでいること' do
+        visit root_path
+        fill_in "name", with: 'Factoryで作ったデフォルトのタイトル１'
+        select "Label0", from: 'label_id'
+        select "着手中", from: 'completed'
+        click_button '検索'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        expect(page).to have_content 'Label0'
+        expect(page).to have_content 'In progress'
+      end
+    end
+
     # ここにstep3_4のページネーション追加テスト内容記載
     it 'ページネーションで5件のみ表示されること' do
       visit root_path
@@ -130,6 +184,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in "end_at", with: time
         select "未着手", from: 'task_completed'
         select "高", from: 'task_priority'
+        check "Label0"
         # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
@@ -139,6 +194,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '2020/03/20'
         expect(page).to have_content 'No started'
         expect(page).to have_content 'High'
+        expect(page).to have_content 'Label0'
       end
     end
   end

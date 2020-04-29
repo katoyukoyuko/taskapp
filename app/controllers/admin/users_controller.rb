@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_user_path(@user.id), notice: t('view.user.edit_message')
+      redirect_to admin_user_path(@user), notice: t('view.user.edit_message')
     else
       render :edit
     end
