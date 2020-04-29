@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
 
     if @user.save
       flash[:notice] = 'ユーザーを作成しました'
-      redirect_to require_admins_path
+      redirect_to admin_users_path
     else
       render :new
     end
@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to require_admin_path(@user.id), notice: t('view.user.edit_message')
+      redirect_to admin_user_path(@user.id), notice: t('view.user.edit_message')
     else
       render :edit
     end
@@ -40,9 +40,9 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      redirect_to require_admins_path, notice: t('view.user.destroy_message')
+      redirect_to admin_users_path, notice: t('view.user.destroy_message')
     else
-      redirect_to require_admins_path, notice: t('view.user.destroy_errer')
+      redirect_to admin_users_path, notice: t('view.user.destroy_errer')
     end
   end
 
