@@ -185,6 +185,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         select "未着手", from: 'task_completed'
         select "高", from: 'task_priority'
         check "Label0"
+        check "Label1"
+        check "Label2"
         # 「登録」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         click_button '登録'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
@@ -195,6 +197,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'No started'
         expect(page).to have_content 'High'
         expect(page).to have_content 'Label0'
+        expect(page).to have_content 'Label1'
+        expect(page).to have_content 'Label2'
       end
     end
   end
