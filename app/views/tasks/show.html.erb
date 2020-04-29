@@ -22,6 +22,13 @@
     <th scope="row"><strong><%= t('view.task.priority') %></strong></th>
     <td><%= @task.priority_i18n %></td>
     </tr>
+    <th scope="row"><strong><%= t('view.task.label') %></strong></th>
+    <td>
+      <% @task.labels.each do |label| %>
+        <span class="badge badge-secondary"><%= label.name %></span>
+      <% end %>
+    </td>
+    </tr>
   </tbody>
 </table>
 

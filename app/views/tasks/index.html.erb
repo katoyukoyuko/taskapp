@@ -10,11 +10,14 @@
 
   <%= form.hidden_field :search, value: 'true' %>
 
-  <%= form.label t('view.task.name') %>
+  <label><%= form.label t('view.task.name') %></label>
   <%= form.text_field :name ,id: :name%>
 
-  <%= form.label t('view.task.status') %>
+  <label><%= form.label t('view.task.status') %></label>
   <%= form.select :completed , Task.completeds.keys.map {|k| [I18n.t("enums.tasks.completed.#{k}"), k]}, include_blank: true, id: :completed, class: "form-control" %>
+
+  <label><%= form.label t('view.task.label') %></label>
+  <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
 
   <%= form.submit t('view.task.search') ,class: "btn btn-info" %>
   <%= link_to "検索 リセット", root_path , class: "btn btn-default" %>
@@ -41,6 +44,7 @@
       <th><%= t('view.task.end_at') %></th>
       <th><%= t('view.task.status') %></th>
       <th><%= t('view.task.priority') %></th>
+      <th><%= t('view.task.label') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -54,6 +58,11 @@
       <td class="task_row_endat"><%= task.end_at&.strftime('%Y/%m/%d') %></td>
       <td><%= task.completed_i18n%></td>
       <td class="task_row_priority"><%= task.priority_i18n %></td>
+      <td>
+        <% task.labels.each do |label| %>
+          <span class="badge badge-secondary"><%= label.name %></span>
+        <% end %>
+      </td>
       <td><%= link_to t('view.task.show_button'), task %></td>
       <td><%= link_to t('view.task.edit_button'), edit_task_path(task) %></td>
       <td><%= link_to t('view.task.destroy'), task, method: :delete, data: { confirm: t('view.task.destroy_confirm') } %></td>
